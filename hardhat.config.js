@@ -27,18 +27,11 @@ module.exports = {
       gasPrice: 0,
       ovm: true // This sets the network as using the ovm and ensure contract will be compiled against that.
     },
-    rinkeby: {
-      url: "https://eth-mainnet.alchemyapi.io/v2/123abc123abc123abc123abc123abcde",
-      accounts: ['0x2654f93ae165050dB4AcCA3CCC2c91CF67c730e2'],
-      gasPrice: 15000000,
-      ovm: true
-    },
-    'optimistic-kovan': {
-      chainId: 69,
-      url: 'https://kovan.optimism.io',
-      accounts: ['0x2654f93ae165050dB4AcCA3CCC2c91CF67c730e2'],
-      gasPrice: 15000000,
-      ovm: true
+    matic: {
+      url: "https://rpc-mumbai.maticvigil.com",
+      accounts: ['e013c13dcf62b53cbe070b00a6886924f58d944d2b43b4aa4050adde3bf7b8e3',
+        '6c8329a15c2bcf7c291d9f5b3c7944ce2cb9c4d5c3444aa8e1a870f6ae7c7df3',
+        'f5a8a53f648a61a2485e77b3c52552e59b6fac6e8bf53338924b179f94eed5b5']
     }
   },
   solidity: '0.7.6',
