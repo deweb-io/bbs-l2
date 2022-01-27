@@ -5,6 +5,9 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "hardhat/console.sol";
 
 contract Registry is Ownable {
+  string public teststring;
+  address public testaddress;
+  operator testOperator;
 
   struct operator{
     address id_contract;
@@ -23,17 +26,18 @@ contract Registry is Ownable {
   mapping(string => address) public users;
   event UserRegister(address _operator_contract, string _name);
 
-
-  // First operator after deploying registery should be registering dWeb OperatorRegister
+  // First operator after deploying registery should be registering deWeb OperatorRegister
   // This cannot be done in the constructor becouse OperatorContract should get the reg address
   // on its deployment
 
-  function registerDweb(address _id_contract) public onlyOwner {
-     operators[_id_contract] = (operator(_id_contract, "dweb", _id_contract));
-     operatorsNames["dweb"] = _id_contract;
 
-     emit OperatorRegister(_id_contract, "dweb", _id_contract);
-     console.log ("Operator dweb, contract id:", _id_contract);
+
+  function registerDeweb(address _id_contract) public onlyOwner {
+     operators[_id_contract] = (operator(_id_contract, "deweb", _id_contract));
+     operatorsNames["deweb"] = _id_contract;
+
+     emit OperatorRegister(_id_contract, "deweb", _id_contract);
+     console.log ("Operator deweb, contract id:", _id_contract);
   }
 
   function registerOperator(address _id_contract, string memory _name, address _authContract) public  {

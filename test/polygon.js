@@ -12,6 +12,7 @@ let operator1;
 
 describe('Polygon test', () => {
   before(async() => {
+    console.log ('=== process.env ===', process.env);
      accounts = await hre.ethers.getSigners();
      //console.log("accounts", accounts);
   });
@@ -40,13 +41,13 @@ describe('Polygon test', () => {
       const OperatorContract = await hre.ethers.getContractFactory("OperatorContract");
       operator1 = await OperatorContract.deploy(bbsTokenL2.address, registry.address);
       await operator1.deployed();
-      console.log("operator1 (dWeb) deployed:", operator1.address);
+      console.log("operator1 (deWeb) deployed:", operator1.address);
     });
 
     it('Execute register dweb', async() => {
       //console.log ("callTXandGas -> registry.registerDweb():" );
       //await callTXandGas (registry.estimateGas.registerDweb, operator1.address);
-      await registry.registerDweb(operator1.address);
+      await registry.registerDeweb(operator1.address);
     });
 
     it('Execute register user', async() => {

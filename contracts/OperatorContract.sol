@@ -10,7 +10,7 @@ contract OperatorContract is Ownable {
   IL2StandardERC20 immutable bbsToken;
   Registry immutable registry;
 
-  string public constant DWEB_OPERATOR_REG_ID = "dweb";
+  string public constant DWEB_OPERATOR_REG_ID = "deweb";
   uint256 public constant DWEB_PERCENTAGE = 10;
   uint256 public constant OPERATOR_PERCENTAGE = 10;
 

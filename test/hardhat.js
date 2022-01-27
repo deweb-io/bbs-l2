@@ -2,9 +2,6 @@
 //const {expectRevert} = require('./utils');
 
 const hre = require("hardhat");
-const L2BBS_ADDRESS ='0x5FbDB2315678afecb367f032d93F642f64180aa3';
-const WEI2USD = 0.00000041/100000000;
-const EXCHANGE_RATE_DATE = '24/10/2021'
 
 let accounts;
 let gasPrice;
@@ -48,7 +45,7 @@ describe('Gas cost testing - Hardhat local', () => {
     it('Execute register dweb', async() => {
       //console.log ("callTXandGas -> registry.registerDweb():" );
       //await callTXandGas (registry.estimateGas.registerDweb, operator1.address);
-      await registry.registerDweb(operator1.address);
+      await registry.registerDeweb(operator1.address);
     });
 
     it('Execute register user', async() => {
