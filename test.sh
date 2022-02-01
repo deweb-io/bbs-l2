@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Choose your test blockchain (p = polygon | o = optimism | h = hardhat | e - edgewere on polkadot)"
+echo "Choose your test blockchain (p = polygon | o = optimism | h = hardhat | e - edgewere polkadot)"
 read blockchain
 export POC_NETWOTK=$blockchain
 
@@ -16,7 +16,7 @@ then
   echo "Include L1 and bridge? (y/n)"
   read L1
   export POC_L1=$L1
-  if [ $POC_L1 == 'y' ];
+  if [ "$L1" == 'y' ];
   then
     npx hardhat run scripts/initL1.js
     npx hardhat --network 'optimism' run scripts/initL2.js
