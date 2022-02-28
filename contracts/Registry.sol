@@ -26,12 +26,16 @@ contract Registry is Ownable {
   mapping(string => address) public users;
   event UserRegister(address _operator_contract, string _name);
 
+
+  //TEST - is data changes
+  function getOperator(string memory _name) public view returns (address) {
+     return operatorsNames[_name];
+  }
+
+
   // First operator after deploying registery should be registering deWeb OperatorRegister
   // This cannot be done in the constructor becouse OperatorContract should get the reg address
   // on its deployment
-
-
-
   function registerDeweb(address _id_contract) public onlyOwner {
      operators[_id_contract] = (operator(_id_contract, "deweb", _id_contract));
      operatorsNames["deweb"] = _id_contract;
@@ -72,6 +76,7 @@ contract Registry is Ownable {
     "_operator_contract is not registered");
 
      users[_name] = _operator_contract;
+
 
      emit UserRegister(_operator_contract, _name);
      //console.log ("User ", _name, " operator contract id:", _operator_contract);

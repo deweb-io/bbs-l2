@@ -15,12 +15,7 @@ elif [ $blockchain == 'o' ];
 then
   echo "Include L1 and bridge? (y/n)"
   read L1
-  export POC_L1=$L1
-  if [ "$L1" == 'y' ];
-  then
-    npx hardhat run scripts/initL1.js
-    npx hardhat --network 'optimism' run scripts/initL2.js
-  fi
+  export POC_L1=$L1qjjlJlj
   npx hardhat --network 'optimism' test test/test.js
 elif [ $blockchain == 'h' ];
 then

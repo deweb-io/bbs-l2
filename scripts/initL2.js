@@ -1,11 +1,14 @@
-
+//const hre = require('hardhat');
 const ethers = require('ethers');
 const { Watcher } = require('@eth-optimism/core-utils');
 const { predeploys, getContractInterface } = require('@eth-optimism/contracts');
 
+
+
 //const factory__L1_ERC20 = factory('ERC20')
 const erc20L1Artifact = require('../artifacts/contracts/BBSTokenL1.sol/BBSTokenL1.json');
 const factory__L1_ERC20 = new ethers.ContractFactory(erc20L1Artifact.abi, erc20L1Artifact.bytecode);
+//let factory__L1_ERC20;
 
 //const factory__L1_ERC20 = factory('ERC20')
 //Q: WHAT IS BETTER PRACTICE - TO CALL THE CONTRACT DEPLOYED ON THE BLOCKCHAIN OR KEEP LOCAL VERSION
@@ -19,6 +22,9 @@ const l2StandardBridgeArtifact = require('../node_modules/@eth-optimism/contract
 const factory__L2StandardBridge = new ethers.ContractFactory(l2StandardBridgeArtifact.abi, l2StandardBridgeArtifact.bytecode);
 
 async function main() {
+    //factory__L1_ERC20 = await new hre.ethers.getContractFactory('BBSTokenL1');
+    //console.log ('factory__L1_ERC20', factory__L1_ERC20);
+
     // Set up our RPC provider connections.
     const l1RpcProvider = new ethers.providers.JsonRpcProvider('http://localhost:9545');
     const l2RpcProvider = new ethers.providers.JsonRpcProvider('http://localhost:8545');
@@ -30,6 +36,7 @@ async function main() {
     const l1Wallet = new ethers.Wallet(key, l1RpcProvider);
     const l2Wallet = new ethers.Wallet(key, l2RpcProvider);
 
+    //console.log ('predeploys:  ', predeploys);
     const l2AddressManager = new ethers.Contract(
         predeploys.Lib_AddressManager,
         getContractInterface('Lib_AddressManager'),
@@ -133,21 +140,33 @@ async function main() {
         '0x');
     await tx2.wait();
 
+
     // Wait for the message to be relayed to L2.
     console.log('Waiting for deposit to be relayed to L2...');
+    console.log('tx2.hash: ', tx2.hash);
     const [ msgHash1 ] = await watcher.getMessageHashesFromL1Tx(tx2.hash);
+    console.log('msgHash1: ', msgHash1);
 
     const receipt = await watcher.getL2TransactionReceipt(msgHash1, true);
-    //console.log("receipt", receipt)
+    console.log('receipt: ', receipt);
 
     // Log some balances to see that it worked!
     console.log(`Balance on L1: ${await L1_ERC20.balanceOf(l1Wallet.address)}`); // 0
     console.log(`Balance on L2: ${await L2_ERC20.balanceOf(l1Wallet.address)}`); // 1234
+
+    return L2_ERC20.address;
 }
 
+
+exports.bridgeFromL1toL2 = main;
+
+/*
 main()
-    .then(() => process.exit(0))
+    .then(() => {
+        process.exit(0);
+    })
     .catch(error => {
         console.error(error);
         process.exit(1);
     });
+*/
