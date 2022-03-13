@@ -3,27 +3,26 @@
 This is a POC, testing and measuring tool for alternative layer 2 solutions for the BBS project.
 
 we run a bunch of test on optional L2 solutions, checking:
-  Users, operators & communities registering
-  Community tokens purchase
-  Royalties splitting
-  Printing
-  Optionally we test funds transfer from L1 to L2
+* Users, operators & communities registering
+* Community tokens purchase
+* Royalties splitting
+* Printing
+* Optionally we test funds transfer from L1 to L2
 
 # Included blockchains:
-    optinism
-    polygonscan
-    Edgeware polkadot
-    (hardhat local test)
+* optimism
+* polygon
+* Edgeware (on Polkadot)
+* (hardhat local test)
 
 # Runing the test:
 Some tests run on a local node.
 Make sure to follow the node deploy process before running the test
 
 run:
-    bash test.sh
+**bash test.sh**
 
 choose your requested L2 blockchain by selecting the corresponding letter
-If an L1 option is available for the blockchain, a y/n question to include the transfer from L1 to L2 will be prompted.
 
 ## Optimism Setup
 To run this test you need both an Ethereum provider and an Optimism provider. The easiest way to achieve this is to follow Optimism's [documentation](https://github.com/ethereum-optimism/optimism-tutorial/tree/main/hardhat) for running L1 and L2 as local nodes.
