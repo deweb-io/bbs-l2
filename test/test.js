@@ -1,7 +1,6 @@
 const hre = require('hardhat');
 const provider = require(`./${process.env.POC_NETWOTK}-funcs`);
 require('dotenv').config();
-const fs = require('fs')
 
 let accounts;
 let registry;
@@ -57,14 +56,8 @@ describe(`L2 ${process.env.POC_NETWOTK} testing`,  function() {
     });
 
     it('Envoke an event with a long text print', async() => {
-        await fs.readFile('./LICENSE', 'utf8' , async(err, data) => {
-            if (err) {
-                console.error(err);
-                return;
-            }
-            //console.log('The message text: ', data);
-            await provider.callContract(operator1, 'printEvent', 'TST', 'user1@domain1', 'data');
-        });
+        await provider.callContract(
+            operator1, 'printEvent', 'TST', 'user1@domain1', new Array(7000).join('1'));
     });
 
     it('Chack balance in accounts before royalties', async() => {
