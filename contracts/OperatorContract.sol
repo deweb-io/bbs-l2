@@ -37,7 +37,7 @@ contract OperatorContract is Ownable {
   event CommunityAdd (string _token_name, string _owner, uint8 _ownerPercentage, address ownerAddress);
   event CommunityTokensBuy (string _token_name, uint256 _amount, address _bbsPayingAdd, string _userRecivingTokens);
   event ExchangeRequestQueue (string _token_name, uint256 _amount, address _bbsTo, string _user);
-  event test (string _a, uint256 _b);
+  event EventPrint (string _token_name, string _user, string _msg);
 
   // Predeploy bbsL2 (optimism standard) contract & registry
   constructor(address _bbsL2, address _registry) {
@@ -141,8 +141,8 @@ contract OperatorContract is Ownable {
     return executed;
   }
 
-  function invokEvent() public {
-    emit test("This is a test print",999999);
+  function printEvent(string memory _token_name, string memory _user, string memory _msg) public {
+    emit EventPrint(_token_name, _user, _msg);
   }
 
 }

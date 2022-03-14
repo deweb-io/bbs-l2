@@ -13,9 +13,6 @@ then
   npx hardhat --network 'edgeware' test test/test.js
 elif [ $blockchain == 'o' ];
 then
-  echo "Include L1 and bridge? (y/n)"
-  read L1
-  export POC_L1=$L1
   npx hardhat --network 'optimism' test test/test.js
 elif [ $blockchain == 'h' ];
 then

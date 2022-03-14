@@ -1,15 +1,12 @@
 const hre = require('hardhat');
 const provider = require(`./${process.env.POC_NETWOTK}-funcs`);
 require('dotenv').config();
-
-let L2BBSAdress;
+const fs = require('fs')
 
 let accounts;
 let registry;
 let bbsTokenL2;
 let operator1;
-
-
 
 describe(`L2 ${process.env.POC_NETWOTK} testing`,  function() {
     this.timeout(0);
@@ -19,34 +16,19 @@ describe(`L2 ${process.env.POC_NETWOTK} testing`,  function() {
         await provider.beforeTest();
     });
 
-    if (process.env.POC_L1 != 'y'){
-        it('Deploy BBS contract', async() => {
-            const BBSTokenL2 = await hre.ethers.getContractFactory('BBSTokenL1');
-            bbsTokenL2 = await BBSTokenL2.deploy();
-            await bbsTokenL2.deployed();
-            console.log('bbsTokenL2 deployed:', bbsTokenL2.address);
-        });
+    it('Deploy BBS contract', async() => {
+        const BBSTokenL2 = await hre.ethers.getContractFactory('BBSTokenL1');
+        bbsTokenL2 = await BBSTokenL2.deploy();
+        await bbsTokenL2.deployed();
+        console.log('bbsTokenL2 deployed:', bbsTokenL2.address);
+    });
 
-        it('Mint 1000 BBS into accounts[0]', async() => {
-            await provider.callContract(bbsTokenL2, 'mint', accounts[0].address, 1000);
-            console.log('Minted 1000 BBS into:', accounts[0].address, 'current balance:',
-                (await bbsTokenL2.balanceOf(accounts[0].address)).toNumber()
-            );
-        });
-    }
-    else {
-        it('L1 to L2 :', async() => {
-            L2BBSAdress = await provider.bridgeFromL1toL2();
-            console.log('L2BBSAdress: ', L2BBSAdress);
-        });
-
-        it('Attach BBS contract', async() => {
-            console.log('bbsTokenL2 attached to:', L2BBSAdress);
-            const BBSTokenL2 = await hre.ethers.getContractFactory('BBSTokenL1');
-            bbsTokenL2 = await BBSTokenL2.attach(L2BBSAdress);
-
-        });
-    }
+    it('Mint 1000 BBS into accounts[0]', async() => {
+        await provider.callContract(bbsTokenL2, 'mint', accounts[0].address, 1000);
+        console.log('Minted 1000 BBS into:', accounts[0].address, 'current balance:',
+            (await bbsTokenL2.balanceOf(accounts[0].address)).toNumber()
+        );
+    });
 
     it('Deploy registery contract', async() => {
         const Registry = await hre.ethers.getContractFactory('Registry');
@@ -74,9 +56,18 @@ describe(`L2 ${process.env.POC_NETWOTK} testing`,  function() {
         await provider.callContract(operator1, 'addComunity', 'TST', 'user1@domain1', 20, accounts[1].address, accounts[2].address);
     });
 
+    it('Envoke an event with a long text print', async() => {
+        await fs.readFile('./LICENSE', 'utf8' , async(err, data) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            //console.log('The message text: ', data);
+            await provider.callContract(operator1, 'printEvent', 'TST', 'user1@domain1', 'data');
+        });
+    });
+
     it('Chack balance in accounts before royalties', async() => {
-        //const erc20L2Artifact = require('../node_modules/@eth-optimism/contracts/artifacts-ovm/contracts/optimistic-ethereum/libraries/standards/L2StandardERC20.sol/L2StandardERC20.json');
-        //bbsTokenL2 = await hre.ethers.getContractAt(erc20L2Artifact.abi, L2BBS_ADDRESS, accounts[0]);
         await printBalances();
     });
 

@@ -1,5 +1,5 @@
 /*optimism local noad*/
-const L1toL2 = require('../scripts/initL2');
+//const L1toL2 = require('../scripts/initL2');
 const WEI2USD = 0.00000027/100000000;
 const EXCHANGE_RATE_DATE = '23/2/2022';
 let gasPrice;
@@ -18,16 +18,6 @@ module.exports = {
         //set provider for waitForTransaction receipt
         rpcProvider = new ethers.providers.JsonRpcProvider('http://localhost:8545');
     },
-    bridgeFromL1toL2: async function() {
-        return await L1toL2.bridgeFromL1toL2()
-            .then(() => {
-                process.exit(0);
-            })
-            .catch(error => {
-                console.error(error);
-                process.exit(1);
-            });
-    },
     callContract: async function() {
         let [contract, funcName, ...args] = arguments;
         await estimateGas(...arguments);
@@ -42,5 +32,5 @@ async function estimateGas() {
     console.log ('contract.estimateGas[funcName]:', contract.address, '.estimateGas.',
         funcName,' ...args: ', ...args);
     const gasCost = await (contract.estimateGas[funcName](...args));
-    console.log ('Gas costs = ', gasCost * gasPrice , ' Estimated at ', gasCost * gasPrice * WEI2USD , '$', EXCHANGE_RATE_DATE);
+    console.log ('Gas costs = ', gasCost.toNumber(), ' * gasPrice * WEI2USD = ', gasCost * gasPrice * WEI2USD , '$', EXCHANGE_RATE_DATE);
 }
