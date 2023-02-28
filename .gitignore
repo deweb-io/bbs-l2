@@ -1,4 +1,5 @@
 *.log
+.env
 artifacts-ovm/
 artifacts/
 cache-ovm/
